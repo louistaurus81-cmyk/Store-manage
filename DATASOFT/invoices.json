@@ -1,0 +1,198 @@
+[
+  {
+    "id": "INV-001",
+    "invoiceCode": "HD-202610-001",
+    "customerId": "CUST-001",
+    "customerName": "Nguyễn Hoàng Long",
+    "customerPhone": "0915234888",
+    "salesId": "USR-003",
+    "salesName": "Lê Thị Thu Thảo",
+    "items": [
+      {
+        "productId": "PRD-001",
+        "productName": "Laptop Dell Latitude 5420 (i5-1145G7, 16GB, 256GB)",
+        "imei": "DL5420-SN-8291823",
+        "quantity": 1,
+        "unitPrice": 11200000,
+        "discount": 200000,
+        "total": 11000000,
+        "warrantyMonths": 12
+      }
+    ],
+    "subTotal": 11200000,
+    "discount": 200000,
+    "finalAmount": 11000000,
+    "paidAmount": 11000000,
+    "debtAmount": 0,
+    "paymentMethod": "transfer",
+    "status": "paid",
+    "createdAt": "2026-10-10T14:30:00.000Z",
+    "note": "Khách chuyển khoản Vietcombank đủ."
+  },
+  {
+    "id": "INV-002",
+    "invoiceCode": "HD-202610-002",
+    "customerId": "CUST-002",
+    "customerName": "Chị Mai Lan Anh",
+    "customerPhone": "0983567112",
+    "salesId": "USR-003",
+    "salesName": "Lê Thị Thu Thảo",
+    "items": [
+      {
+        "productId": "PRD-004",
+        "productName": "RAM Kingston Fury Beast 16GB DDR4 Bus 3200MHz",
+        "imei": "KF-RAM-881923",
+        "quantity": 2,
+        "unitPrice": 950000,
+        "discount": 50000,
+        "total": 1850000,
+        "warrantyMonths": 36
+      },
+      {
+        "productId": "PRD-003",
+        "productName": "Ổ cứng SSD Kingston NV2 500GB PCIe 4.0 NVMe",
+        "imei": "SNV2S-90918",
+        "quantity": 1,
+        "unitPrice": 1150000,
+        "discount": 0,
+        "total": 1150000,
+        "warrantyMonths": 36
+      },
+      {
+        "productId": "PRD-007",
+        "productName": "Dịch vụ Vệ sinh Laptop & Tra keo tản nhiệt Arctic MX-4 cao cấp",
+        "quantity": 1,
+        "unitPrice": 150000,
+        "discount": 0,
+        "total": 150000,
+        "warrantyMonths": 1
+      }
+    ],
+    "subTotal": 3200000,
+    "discount": 50000,
+    "finalAmount": 3150000,
+    "paidAmount": 2000000,
+    "debtAmount": 1150000,
+    "paymentMethod": "debt",
+    "status": "partial",
+    "createdAt": "2026-10-12T09:15:00.000Z",
+    "note": "Khách đặt cọc 2tr, còn nợ 1.15tr hẹn trả ngày 25."
+  },
+  {
+    "id": "INV-003",
+    "invoiceCode": "HD-202610-003",
+    "customerId": "CUST-003",
+    "customerName": "Công ty TNHH Phần Mềm AlphaSoft",
+    "customerPhone": "02438889999",
+    "salesId": "USR-003",
+    "salesName": "Lê Thị Thu Thảo",
+    "items": [
+      {
+        "productId": "PRD-005",
+        "productName": "Card màn hình Asus Dual GeForce RTX 4060 OC Edition 8GB",
+        "imei": "ASUS-4060-SN-001",
+        "quantity": 2,
+        "unitPrice": 8900000,
+        "discount": 400000,
+        "total": 17400000,
+        "warrantyMonths": 36
+      },
+      {
+        "productId": "PRD-006",
+        "productName": "Nguồn máy tính Corsair CV650 650W 80 Plus Bronze",
+        "imei": "CV650-SN-29311",
+        "quantity": 2,
+        "unitPrice": 1390000,
+        "discount": 0,
+        "total": 2780000,
+        "warrantyMonths": 36
+      },
+      {
+        "productId": "PRD-004",
+        "productName": "RAM Kingston Fury Beast 16GB DDR4 Bus 3200MHz",
+        "quantity": 4,
+        "unitPrice": 950000,
+        "discount": 200000,
+        "total": 3600000,
+        "warrantyMonths": 36
+      }
+    ],
+    "subTotal": 24380000,
+    "discount": 600000,
+    "finalAmount": 23780000,
+    "paidAmount": 18780000,
+    "debtAmount": 5000000,
+    "paymentMethod": "transfer",
+    "status": "partial",
+    "createdAt": "2026-10-13T16:00:00.000Z",
+    "note": "Khách doanh nghiệp nâng cấp dàn máy đồ họa AI. Còn công nợ 5tr cuối tháng đối soát."
+  },
+  {
+    "id": "INV-004",
+    "invoiceCode": "HD-202610-004",
+    "customerId": "CUST-004",
+    "customerName": "Anh Vũ Quốc Huy",
+    "customerPhone": "0971239876",
+    "salesId": "USR-003",
+    "salesName": "Lê Thị Thu Thảo",
+    "items": [
+      {
+        "productId": "PRD-002",
+        "productName": "Laptop Gaming Asus TUF F15 FX506HC (i5-11400H, RTX 3050, 16GB, 512GB)",
+        "imei": "TUF-F15-SN-77281",
+        "quantity": 1,
+        "unitPrice": 16800000,
+        "discount": 500000,
+        "total": 16300000,
+        "warrantyMonths": 12
+      }
+    ],
+    "subTotal": 16800000,
+    "discount": 500000,
+    "finalAmount": 16300000,
+    "paidAmount": 16300000,
+    "debtAmount": 0,
+    "paymentMethod": "cash",
+    "status": "paid",
+    "createdAt": "2026-10-14T11:20:00.000Z",
+    "note": "Khách thanh toán tiền mặt tại quầy, tặng kèm balo laptop."
+  },
+  {
+    "id": "INV-005",
+    "invoiceCode": "HD-202610-005",
+    "customerId": "CUST-005",
+    "customerName": "Bạn Trần Minh Quang",
+    "customerPhone": "0934567890",
+    "salesId": "USR-003",
+    "salesName": "Lê Thị Thu Thảo",
+    "items": [
+      {
+        "productId": "PRD-003",
+        "productName": "Ổ cứng SSD Kingston NV2 500GB PCIe 4.0 NVMe",
+        "quantity": 3,
+        "unitPrice": 1150000,
+        "discount": 150000,
+        "total": 3300000,
+        "warrantyMonths": 36
+      },
+      {
+        "productId": "PRD-004",
+        "productName": "RAM Kingston Fury Beast 16GB DDR4 Bus 3200MHz",
+        "quantity": 2,
+        "unitPrice": 950000,
+        "discount": 100000,
+        "total": 1800000,
+        "warrantyMonths": 36
+      }
+    ],
+    "subTotal": 5350000,
+    "discount": 250000,
+    "finalAmount": 5100000,
+    "paidAmount": 5100000,
+    "debtAmount": 0,
+    "paymentMethod": "transfer",
+    "status": "paid",
+    "createdAt": "2026-10-15T08:45:00.000Z",
+    "note": "Khách kỹ thuật mua buôn linh kiện nâng cấp phòng net."
+  }
+]

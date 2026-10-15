@@ -1,0 +1,74 @@
+[
+  {
+    "id": "IMEI-MV9CSBN2",
+    "imei": "1321321321321321312",
+    "productId": "PRD-009",
+    "productName": "Test 01",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-15T09:45:34.958Z"
+  },
+  {
+    "id": "IMEI-MV9CS8LN",
+    "imei": "313123123213123321",
+    "productId": "PRD-009",
+    "productName": "Test 01",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-15T09:45:31.019Z"
+  },
+  {
+    "id": "IMEI-001",
+    "imei": "DL5420-SN-8291823",
+    "productId": "PRD-001",
+    "productName": "Laptop Dell Latitude 5420",
+    "status": "in_stock",
+    "purchaseDate": "2026-01-10T10:00:00.000Z"
+  },
+  {
+    "id": "IMEI-002",
+    "imei": "DL5420-SN-8291824",
+    "productId": "PRD-001",
+    "productName": "Laptop Dell Latitude 5420",
+    "status": "in_stock",
+    "purchaseDate": "2026-01-10T10:00:00.000Z"
+  },
+  {
+    "id": "IMEI-003",
+    "imei": "ASUS-TUF-M9N0CV01",
+    "productId": "PRD-002",
+    "productName": "Laptop Gaming Asus TUF F15",
+    "status": "in_stock",
+    "purchaseDate": "2026-02-01T14:00:00.000Z"
+  },
+  {
+    "id": "IMEI-004",
+    "imei": "KS-NV2-882910401",
+    "productId": "PRD-003",
+    "productName": "SSD Kingston NV2 500GB",
+    "status": "in_stock",
+    "purchaseDate": "2026-02-15T08:00:00.000Z"
+  },
+  {
+    "id": "IMEI-005",
+    "imei": "KS-NV2-882910402",
+    "productId": "PRD-003",
+    "productName": "SSD Kingston NV2 500GB",
+    "status": "in_stock",
+    "purchaseDate": "2026-02-15T08:00:00.000Z"
+  },
+  {
+    "id": "IMEI-006",
+    "imei": "KFURY-32-094812",
+    "productId": "PRD-004",
+    "productName": "RAM Kingston Fury Beast 16GB",
+    "status": "in_stock",
+    "purchaseDate": "2026-02-20T11:00:00.000Z"
+  },
+  {
+    "id": "IMEI-007",
+    "imei": "RTX4060-DUAL-9921",
+    "productId": "PRD-005",
+    "productName": "Card màn hình Asus RTX 4060",
+    "status": "in_stock",
+    "purchaseDate": "2026-03-01T09:00:00.000Z"
+  }
+]
