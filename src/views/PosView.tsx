@@ -74,6 +74,7 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
 
   // Cart states
   const [cartItems, setCartItems] = useState<InvoiceItem[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [customerSearchText, setCustomerSearchText] = useState('');

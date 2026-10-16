@@ -115,7 +115,7 @@ export const MobilePOS: React.FC<MobilePOSProps> = ({
         productName: p.name,
         quantity: 1,
         unitPrice: p.retailPrice,
-        costPrice: p.costPrice || p.importPrice || 0,
+        discount: 0,
         total: p.retailPrice,
         imei: chosenImei,
         warrantyMonths: p.warrantyMonths,
@@ -142,7 +142,7 @@ export const MobilePOS: React.FC<MobilePOSProps> = ({
         productName: p.name,
         quantity: 1,
         unitPrice: p.retailPrice,
-        costPrice: p.costPrice || p.importPrice || 0,
+        discount: 0,
         total: p.retailPrice,
         warrantyMonths: p.warrantyMonths,
       };
