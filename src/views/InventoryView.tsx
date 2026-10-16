@@ -17,6 +17,8 @@ import {
 import type { Category, ImeiRecord, Product, Supplier, UserRole } from '../types/datasoft';
 import { apiFetch, formatVND } from '../utils/api';
 import { AddProductModal } from '../components/AddProductModal';
+import { SkeletonCard } from '../components/common/SkeletonCard';
+import { EmptyState } from '../components/common/EmptyState';
 
 interface InventoryViewProps {
   userRole: UserRole;
@@ -347,15 +349,14 @@ export const InventoryView: React.FC<InventoryViewProps> = ({ userRole }) => {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {loading ? (
-                <tr>
-                  <td colSpan={8} className="p-8 text-center text-slate-400">
-                    Đang nạp dữ liệu từ DATASOFT/products.json...
-                  </td>
-                </tr>
+                <SkeletonCard count={6} type="table-row" />
               ) : filteredProducts.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="p-8 text-center text-slate-400">
-                    Không tìm thấy sản phẩm nào.
+                  <td colSpan={8} className="p-8">
+                    <EmptyState
+                      title="Kho hàng trống hoặc không tìm thấy"
+                      description="Không có sản phẩm nào phù hợp với từ khóa tìm kiếm trong kho dữ liệu Thịnh Phát Technology."
+                    />
                   </td>
                 </tr>
               ) : (
@@ -423,8 +424,8 @@ export const InventoryView: React.FC<InventoryViewProps> = ({ userRole }) => {
       {/* MODAL 1: QUẢN LÝ SERIAL / IMEI (CRUD & LINK SUPPLIER)     */}
       {/* ========================================================= */}
       {selectedProductForImei && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-zinc-900/20 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white/95 backdrop-blur-md border border-zinc-200/60 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
               <div>
                 <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
@@ -616,8 +617,8 @@ export const InventoryView: React.FC<InventoryViewProps> = ({ userRole }) => {
       {/* MODAL 2: QUẢN LÝ DANH MỤC (CRUD CATEGORIES)               */}
       {/* ========================================================= */}
       {showCategoryModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-zinc-900/20 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white/95 backdrop-blur-md border border-zinc-200/60 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
               <div className="flex items-center gap-2">
                 <FolderTree className="w-5 h-5 text-blue-600" />

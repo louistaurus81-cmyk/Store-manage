@@ -1,0 +1,60 @@
+[
+  {
+    "id": "TMPL-INV-01",
+    "templateName": "Hóa Đơn Bán Hàng & Phiếu Xuất Kho Chuẩn A4/A5",
+    "type": "invoice",
+    "isDefault": true,
+    "variables": [
+      "store_name",
+      "store_address",
+      "store_phone",
+      "invoice_code",
+      "customer_name",
+      "customer_phone",
+      "customer_address",
+      "items_table",
+      "subtotal",
+      "discount",
+      "final_amount",
+      "paid_amount",
+      "debt_amount",
+      "bank_info",
+      "sales_name",
+      "date",
+      "footer_note"
+    ],
+    "htmlContent": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px; color: #1e293b; max-width: 800px; margin: 0 auto; line-height: 1.5;\">\n  <div style=\"display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f172a; padding-bottom: 16px; margin-bottom: 20px;\">\n    <div>\n      <h1 style=\"margin: 0; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; color: #0f172a;\">{{store_name}}</h1>\n      <p style=\"margin: 4px 0 0; font-size: 13px; color: #475569;\">{{store_address}}</p>\n      <p style=\"margin: 2px 0 0; font-size: 13px; color: #475569;\">Hotline: <strong>{{store_phone}}</strong></p>\n    </div>\n    <div style=\"text-align: right;\">\n      <div style=\"font-size: 18px; font-weight: 800; font-family: monospace; color: #059669;\">{{invoice_code}}</div>\n      <div style=\"font-size: 12px; color: #64748b; margin-top: 4px;\">Ngày lập: {{date}}</div>\n      <div style=\"font-size: 12px; color: #64748b;\">Nhân viên: <strong>{{sales_name}}</strong></div>\n    </div>\n  </div>\n\n  <div style=\"text-align: center; margin-bottom: 24px;\">\n    <h2 style=\"margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a;\">HÓA ĐƠN BÁN HÀNG & BẢO HÀNH</h2>\n  </div>\n\n  <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px;\">\n    <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 8px;\">\n      <div>Khách hàng: <strong style=\"color: #0f172a;\">{{customer_name}}</strong></div>\n      <div>Điện thoại: <strong style=\"font-family: monospace; color: #0f172a;\">{{customer_phone}}</strong></div>\n      <div style=\"grid-column: span 2;\">Địa chỉ: {{customer_address}}</div>\n    </div>\n  </div>\n\n  <table style=\"width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px;\">\n    <thead>\n      <tr style=\"background: #f1f5f9; border-top: 1px solid #cbd5e1; border-bottom: 2px solid #cbd5e1; text-align: left;\">\n        <th style=\"padding: 10px; width: 40px; text-align: center;\">#</th>\n        <th style=\"padding: 10px;\">Tên sản phẩm / Linh kiện & Số Serial IMEI</th>\n        <th style=\"padding: 10px; width: 60px; text-align: center;\">BH</th>\n        <th style=\"padding: 10px; width: 50px; text-align: center;\">SL</th>\n        <th style=\"padding: 10px; width: 110px; text-align: right;\">Đơn giá</th>\n        <th style=\"padding: 10px; width: 120px; text-align: right;\">Thành tiền</th>\n      </tr>\n    </thead>\n    <tbody>\n      {{items_table}}\n    </tbody>\n  </table>\n\n  <div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; font-size: 13px;\">\n    <div style=\"max-width: 320px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px;\">\n      <div style=\"font-weight: 700; color: #0f172a; margin-bottom: 4px;\">Thông tin thanh toán ngân hàng:</div>\n      <div style=\"font-size: 12px; color: #475569;\">{{bank_info}}</div>\n    </div>\n    <div style=\"width: 260px; text-align: right;\">\n      <div style=\"display: flex; justify-content: space-between; padding: 4px 0;\">\n        <span>Tổng tiền hàng:</span>\n        <strong style=\"font-family: monospace;\">{{subtotal}}</strong>\n      </div>\n      <div style=\"display: flex; justify-content: space-between; padding: 4px 0; color: #dc2626;\">\n        <span>Chiết khấu / Giảm giá:</span>\n        <strong style=\"font-family: monospace;\">-{{discount}}</strong>\n      </div>\n      <div style=\"display: flex; justify-content: space-between; padding: 8px 0; border-top: 2px solid #cbd5e1; font-size: 15px; font-weight: 800; color: #059669;\">\n        <span>TỔNG THANH TOÁN:</span>\n        <span style=\"font-family: monospace;\">{{final_amount}}</span>\n      </div>\n      <div style=\"display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px;\">\n        <span>Khách đã trả:</span>\n        <span style=\"font-family: monospace;\">{{paid_amount}}</span>\n      </div>\n      <div style=\"display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: #e11d48; font-weight: 700;\">\n        <span>Còn nợ lại:</span>\n        <span style=\"font-family: monospace;\">{{debt_amount}}</span>\n      </div>\n    </div>\n  </div>\n\n  <div style=\"border-top: 1px dashed #cbd5e1; padding-top: 12px; font-size: 11px; color: #64748b; margin-bottom: 36px;\">\n    {{footer_note}}\n  </div>\n\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; text-align: center; font-size: 13px;\">\n    <div>\n      <div style=\"font-weight: 700; text-transform: uppercase;\">Khách hàng</div>\n      <div style=\"font-size: 11px; color: #64748b; font-style: italic; margin-bottom: 60px;\">(Ký và ghi rõ họ tên)</div>\n      <div style=\"font-weight: 600;\">{{customer_name}}</div>\n    </div>\n    <div>\n      <div style=\"font-weight: 700; text-transform: uppercase;\">Đại diện Cửa hàng</div>\n      <div style=\"font-size: 11px; color: #64748b; font-style: italic; margin-bottom: 60px;\">(Ký và ghi rõ họ tên)</div>\n      <div style=\"font-weight: 600;\">{{sales_name}}</div>\n    </div>\n  </div>\n</div>",
+    "createdAt": "2026-10-15T00:00:00.000Z"
+  },
+  {
+    "id": "TMPL-REP-01",
+    "templateName": "Phiếu Tiếp Nhận & Biên Lai Sửa Chữa Máy Tính",
+    "type": "repair_ticket",
+    "isDefault": true,
+    "variables": [
+      "store_name",
+      "store_address",
+      "store_phone",
+      "ticket_code",
+      "customer_name",
+      "customer_phone",
+      "device_name",
+      "model",
+      "device_serial",
+      "passcode",
+      "accessories",
+      "condition",
+      "issue_description",
+      "diagnosis",
+      "estimated_cost",
+      "deposit_amount",
+      "remaining_cost",
+      "technician_name",
+      "date",
+      "warranty_period",
+      "footer_note"
+    ],
+    "htmlContent": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px; color: #1e293b; max-width: 800px; margin: 0 auto; line-height: 1.5;\">\n  <div style=\"display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f172a; padding-bottom: 16px; margin-bottom: 18px;\">\n    <div>\n      <h1 style=\"margin: 0; font-size: 18px; font-weight: 800; text-transform: uppercase; color: #0f172a;\">{{store_name}}</h1>\n      <p style=\"margin: 4px 0 0; font-size: 12px; color: #475569;\">{{store_address}}</p>\n      <p style=\"margin: 2px 0 0; font-size: 12px; color: #475569;\">Hotline Kỹ thuật: <strong>{{store_phone}}</strong></p>\n    </div>\n    <div style=\"text-align: right;\">\n      <div style=\"font-size: 18px; font-weight: 800; font-family: monospace; color: #2563eb;\">{{ticket_code}}</div>\n      <div style=\"font-size: 12px; color: #64748b; margin-top: 4px;\">Ngày nhận: {{date}}</div>\n    </div>\n  </div>\n\n  <div style=\"text-align: center; margin-bottom: 20px;\">\n    <h2 style=\"margin: 0; font-size: 20px; font-weight: 800; text-transform: uppercase; color: #0f172a;\">PHIẾU TIẾP NHẬN SỬA CHỮA MÁY TÍNH</h2>\n    <div style=\"font-size: 11px; color: #64748b; font-style: italic;\">(Biên nhận kiêm phiếu bảo hành dịch vụ)</div>\n  </div>\n\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; font-size: 13px;\">\n    <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px;\">\n      <div style=\"font-weight: 700; color: #0f172a; margin-bottom: 6px; text-transform: uppercase; font-size: 11px;\">Thông tin khách hàng</div>\n      <div>Khách hàng: <strong>{{customer_name}}</strong></div>\n      <div>Số điện thoại: <strong style=\"font-family: monospace;\">{{customer_phone}}</strong></div>\n      <div>Kỹ thuật viên tiếp nhận: <strong>{{technician_name}}</strong></div>\n    </div>\n    <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px;\">\n      <div style=\"font-weight: 700; color: #0f172a; margin-bottom: 6px; text-transform: uppercase; font-size: 11px;\">Thông tin thiết bị</div>\n      <div>Thiết bị: <strong>{{device_name}}</strong></div>\n      <div>Số Serial / IMEI: <strong style=\"font-family: monospace; color: #2563eb;\">{{device_serial}}</strong></div>\n      <div>Mật khẩu máy: <span style=\"font-family: monospace;\">{{passcode}}</span></div>\n    </div>\n  </div>\n\n  <div style=\"border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 13px;\">\n    <div style=\"margin-bottom: 8px;\"><strong>Tình trạng lỗi do khách khai báo:</strong> {{issue_description}}</div>\n    <div style=\"margin-bottom: 8px;\"><strong>Phụ kiện kèm theo:</strong> {{accessories}} | <strong>Ngoại quan:</strong> {{condition}}</div>\n    <div><strong>Chuẩn đoán kỹ thuật:</strong> {{diagnosis}}</div>\n  </div>\n\n  <div style=\"display: flex; justify-content: flex-end; margin-bottom: 24px; font-size: 13px;\">\n    <div style=\"width: 280px; text-align: right;\">\n      <div style=\"display: flex; justify-content: space-between; padding: 4px 0;\">\n        <span>Dự toán chi phí:</span>\n        <strong style=\"font-family: monospace;\">{{estimated_cost}}</strong>\n      </div>\n      <div style=\"display: flex; justify-content: space-between; padding: 4px 0; color: #059669;\">\n        <span>Khách đã đặt cọc:</span>\n        <strong style=\"font-family: monospace;\">{{deposit_amount}}</strong>\n      </div>\n      <div style=\"display: flex; justify-content: space-between; padding: 6px 0; border-top: 1px solid #cbd5e1; font-weight: 700; color: #e11d48;\">\n        <span>Còn lại khi nhận máy:</span>\n        <strong style=\"font-family: monospace;\">{{remaining_cost}}</strong>\n      </div>\n    </div>\n  </div>\n\n  <div style=\"border-top: 1px dashed #cbd5e1; padding-top: 10px; font-size: 11px; color: #64748b; margin-bottom: 30px;\">\n    {{footer_note}}\n    <div>Thời hạn bảo hành dịch vụ: <strong>{{warranty_period}}</strong>.</div>\n  </div>\n\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; text-align: center; font-size: 13px;\">\n    <div>\n      <div style=\"font-weight: 700; text-transform: uppercase;\">Khách hàng gửi máy</div>\n      <div style=\"font-size: 11px; color: #64748b; font-style: italic; margin-bottom: 50px;\">(Ký và ghi rõ họ tên)</div>\n      <div style=\"font-weight: 600;\">{{customer_name}}</div>\n    </div>\n    <div>\n      <div style=\"font-weight: 700; text-transform: uppercase;\">Đại diện Cửa hàng</div>\n      <div style=\"font-size: 11px; color: #64748b; font-style: italic; margin-bottom: 50px;\">(Kỹ thuật viên)</div>\n      <div style=\"font-weight: 600;\">{{technician_name}}</div>\n    </div>\n  </div>\n</div>",
+    "createdAt": "2026-10-15T00:00:00.000Z"
+  }
+]

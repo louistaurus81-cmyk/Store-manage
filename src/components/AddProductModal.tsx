@@ -152,10 +152,10 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-      <div className="bg-white border border-slate-200/80 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-zinc-900/20 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+      <div className="bg-white/95 backdrop-blur-md border border-zinc-200/60 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
         {/* Tiêu đề modal: Thêm Sản Phẩm Mới */}
-        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+        <div className="p-4 border-b border-zinc-200/60 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
               <Boxes className="w-4 h-4" />

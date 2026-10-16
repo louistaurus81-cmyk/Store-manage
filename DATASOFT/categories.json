@@ -1,0 +1,86 @@
+[
+  {
+    "id": "CAT-ALL",
+    "name": "Tất cả danh mục",
+    "slug": "all",
+    "type": "product",
+    "description": "Toàn bộ danh mục linh kiện & máy tính"
+  },
+  {
+    "id": "CAT-CPU",
+    "name": "CPU - Bộ Vi Xử Lý",
+    "slug": "cpu",
+    "type": "product",
+    "description": "Intel Core i3, i5, i7, i9, AMD Ryzen"
+  },
+  {
+    "id": "CAT-MAIN",
+    "name": "Mainboard - Bo Mạch Chủ",
+    "slug": "mainboard",
+    "type": "product",
+    "description": "Mainboard H610, B760, Z790, B650"
+  },
+  {
+    "id": "CAT-RAM",
+    "name": "RAM - Bộ Nhớ Trong",
+    "slug": "ram",
+    "type": "product",
+    "description": "RAM DDR4, DDR5 Kingston, Corsair, G.Skill"
+  },
+  {
+    "id": "CAT-SSD",
+    "name": "SSD & Ổ Cứng Lưu Trữ",
+    "slug": "ssd",
+    "type": "product",
+    "description": "SSD M.2 NVMe, SATA 2.5\", HDD Seagate"
+  },
+  {
+    "id": "CAT-VGA",
+    "name": "VGA - Card Màn Hình",
+    "slug": "vga",
+    "type": "product",
+    "description": "Nvidia RTX 3050, 4060, 4070, AMD Radeon"
+  },
+  {
+    "id": "CAT-PSU",
+    "name": "Nguồn Máy Tính (PSU)",
+    "slug": "nguon",
+    "type": "product",
+    "description": "Nguồn công suất thực 550W, 650W, 750W 80 Plus"
+  },
+  {
+    "id": "CAT-CASE",
+    "name": "Vỏ Case Máy Tính",
+    "slug": "case",
+    "type": "product",
+    "description": "Case văn phòng, gaming LED RGB kính cường lực"
+  },
+  {
+    "id": "CAT-COOL",
+    "name": "Tản Nhiệt Khí & Nước",
+    "slug": "tan-nhiet",
+    "type": "product",
+    "description": "Tản tháp khí, tản nhiệt nước AIO 240/360"
+  },
+  {
+    "id": "CAT-MON",
+    "name": "Màn Hình Hiển Thị",
+    "slug": "man-hinh",
+    "type": "product",
+    "description": "Màn hình văn phòng, đồ họa, gaming 144Hz - 240Hz"
+  },
+  {
+    "id": "CAT-LAP",
+    "name": "Laptop & Máy Tính Bảng",
+    "slug": "laptop",
+    "type": "product",
+    "description": "Laptop Dell, Asus, Lenovo, HP"
+  },
+  {
+    "id": "CAT-SRV",
+    "name": "Dịch Vụ Sửa Chữa & Cài Đặt",
+    "slug": "dich-vu",
+    "type": "service",
+    "description": "Sửa nguồn, đóng chip, vệ sinh tra keo, cài Windows"
+  }
+]

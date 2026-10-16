@@ -22,6 +22,9 @@ import { WarrantyView } from './views/WarrantyView';
 import { DebtsView } from './views/DebtsView';
 import { PrintTemplatesView } from './views/PrintTemplatesView';
 import { AdminView } from './views/AdminView';
+import { Layout } from './components/Layout';
+import { MobileDashboard } from './views/mobile/MobileDashboard';
+import { MobilePOS } from './views/mobile/MobilePOS';
 import type { UserRole } from './types/datasoft';
 
 function MainApp() {
@@ -115,76 +118,85 @@ function MainApp() {
   const currentHeaderInfo = tabTitles[currentTab] || tabTitles.pos;
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#f5f5f7] text-slate-800 font-sans">
-      {/* macOS Translucent Sidebar */}
-      <Sidebar
-        currentTab={currentTab}
-        onSelectTab={setCurrentTab}
-        currentUser={user}
-        onLogout={logout}
-        dbFilesCount={14}
-      />
+    <Layout
+      currentTab={currentTab}
+      onSelectTab={setCurrentTab}
+      currentUser={user}
+      onLogout={logout}
+      onSwitchRole={switchRoleDemo}
+      quickSearchText={quickSearchText}
+      onQuickSearchChange={setQuickSearchText}
+      onTriggerQuickSearch={handleTriggerQuickSearch}
+      title={currentHeaderInfo.title}
+      subtitle={currentHeaderInfo.subtitle}
+      onOpenQuickPOS={() => setCurrentTab('pos')}
+    >
+      {/* 1. POS View: Responsive Mobile POS (< 768px) vs Desktop POS (>= 768px) */}
+      {currentTab === 'pos' && (
+        <>
+          <div className="block md:hidden">
+            <MobilePOS
+              onNavigateTab={setCurrentTab}
+            />
+          </div>
+          <div className="hidden md:block">
+            <PosView onNavigateToTab={setCurrentTab} />
+          </div>
+        </>
+      )}
 
-      {/* Main Content Viewport */}
-      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-        {/* Header Bar */}
-        <Header
-          currentUser={user}
-          onSwitchUser={switchRoleDemo}
-          onLogout={logout}
-          title={currentHeaderInfo.title}
-          subtitle={currentHeaderInfo.subtitle}
-          quickSearchText={quickSearchText}
-          onQuickSearchChange={setQuickSearchText}
-          onTriggerQuickSearch={handleTriggerQuickSearch}
-        />
+      {currentTab === 'purchasing' && (
+        <PurchasingView userRole={user.role} onNavigateToTab={setCurrentTab} />
+      )}
 
-        {/* Dynamic View Display */}
-        <main className="flex-1 overflow-y-auto">
-          {currentTab === 'pos' && <PosView onNavigateToTab={setCurrentTab} />}
+      {currentTab === 'suppliers' && (
+        <SuppliersView userRole={user.role} onNavigateToTab={setCurrentTab} />
+      )}
 
-          {currentTab === 'purchasing' && (
-            <PurchasingView userRole={user.role} onNavigateToTab={setCurrentTab} />
-          )}
+      {currentTab === 'customers' && (
+        <CustomersView userRole={user.role} onNavigateToTab={setCurrentTab} />
+      )}
 
-          {currentTab === 'suppliers' && (
-            <SuppliersView userRole={user.role} onNavigateToTab={setCurrentTab} />
-          )}
+      {currentTab === 'pc-builder' && <PcBuilderView />}
 
-          {currentTab === 'customers' && (
-            <CustomersView userRole={user.role} onNavigateToTab={setCurrentTab} />
-          )}
-
-          {currentTab === 'pc-builder' && <PcBuilderView />}
-
-          {currentTab === 'dashboard' && (
+      {/* 2. Dashboard View: Responsive Mobile Dashboard (< 768px) vs Desktop Dashboard (>= 768px) */}
+      {currentTab === 'dashboard' && (
+        <>
+          <div className="block md:hidden">
+            <MobileDashboard
+              userRole={user.role}
+              onNavigateTab={setCurrentTab}
+              onOpenQuickPOS={() => setCurrentTab('pos')}
+            />
+          </div>
+          <div className="hidden md:block">
             <DashboardView
               userRole={user.role}
               onNavigateTab={setCurrentTab}
               onSelectRepair={handleSelectRepairFromDashboard}
             />
-          )}
+          </div>
+        </>
+      )}
 
-          {currentTab === 'repairs' && (
-            <RepairsView
-              userRole={user.role}
-              initialSelectedId={targetRepairId}
-              onClearInitialId={() => setTargetRepairId(undefined)}
-            />
-          )}
+      {currentTab === 'repairs' && (
+        <RepairsView
+          userRole={user.role}
+          initialSelectedId={targetRepairId}
+          onClearInitialId={() => setTargetRepairId(undefined)}
+        />
+      )}
 
-          {currentTab === 'inventory' && <InventoryView userRole={user.role} />}
+      {currentTab === 'inventory' && <InventoryView userRole={user.role} />}
 
-          {currentTab === 'warranty' && <WarrantyView />}
+      {currentTab === 'warranty' && <WarrantyView />}
 
-          {currentTab === 'debts' && <DebtsView />}
+      {currentTab === 'debts' && <DebtsView />}
 
-          {currentTab === 'print-templates' && <PrintTemplatesView />}
+      {currentTab === 'print-templates' && <PrintTemplatesView />}
 
-          {currentTab === 'admin' && <AdminView />}
-        </main>
-      </div>
-    </div>
+      {currentTab === 'admin' && <AdminView />}
+    </Layout>
   );
 }
 

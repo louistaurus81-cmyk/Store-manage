@@ -1,5 +1,50 @@
 [
   {
+    "id": "IMEI-B760-UAT-005",
+    "imei": "MB-B760-UAT-005",
+    "productId": "PRD-MAIN-B760-UAT",
+    "productName": "Mainboard ASUS ROG Strix B760-A Gaming WiFi D4",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-16T09:54:00.396Z",
+    "note": "Lô hàng nhập mẫu phục vụ kiểm thử nghiệm thu UAT"
+  },
+  {
+    "id": "IMEI-B760-UAT-004",
+    "imei": "MB-B760-UAT-004",
+    "productId": "PRD-MAIN-B760-UAT",
+    "productName": "Mainboard ASUS ROG Strix B760-A Gaming WiFi D4",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-16T09:54:00.396Z",
+    "note": "Lô hàng nhập mẫu phục vụ kiểm thử nghiệm thu UAT"
+  },
+  {
+    "id": "IMEI-B760-UAT-003",
+    "imei": "MB-B760-UAT-003",
+    "productId": "PRD-MAIN-B760-UAT",
+    "productName": "Mainboard ASUS ROG Strix B760-A Gaming WiFi D4",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-16T09:54:00.396Z",
+    "note": "Lô hàng nhập mẫu phục vụ kiểm thử nghiệm thu UAT"
+  },
+  {
+    "id": "IMEI-B760-UAT-002",
+    "imei": "MB-B760-UAT-002",
+    "productId": "PRD-MAIN-B760-UAT",
+    "productName": "Mainboard ASUS ROG Strix B760-A Gaming WiFi D4",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-16T09:54:00.396Z",
+    "note": "Lô hàng nhập mẫu phục vụ kiểm thử nghiệm thu UAT"
+  },
+  {
+    "id": "IMEI-B760-UAT-001",
+    "imei": "MB-B760-UAT-001",
+    "productId": "PRD-MAIN-B760-UAT",
+    "productName": "Mainboard ASUS ROG Strix B760-A Gaming WiFi D4",
+    "status": "in_stock",
+    "purchaseDate": "2026-10-16T09:54:00.396Z",
+    "note": "Lô hàng nhập mẫu phục vụ kiểm thử nghiệm thu UAT"
+  },
+  {
     "id": "IMEI-MV9CSBN2",
     "imei": "1321321321321321312",
     "productId": "PRD-009",

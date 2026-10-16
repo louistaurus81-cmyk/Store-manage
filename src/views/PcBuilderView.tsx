@@ -14,6 +14,7 @@ import {
   Info,
   ArrowRight,
   ShieldCheck,
+  ShieldAlert,
   User,
   Phone,
   Gamepad2,
@@ -159,6 +160,11 @@ export const PcBuilderView: React.FC = () => {
   const totalPrice = currentItems.reduce((s, i) => s + i.total, 0);
   const finalPrice = Math.max(0, totalPrice - discount);
 
+  // Kiểm tra linh kiện bắt buộc (Core Parts) để chốt cấu hình
+  const hasCpu = Boolean(selectedItems['CAT-CPU']);
+  const hasMainboard = Boolean(selectedItems['CAT-MAIN']);
+  const hasRequiredCoreParts = hasCpu && hasMainboard;
+
   // Ước tính công suất nguồn yêu cầu (Wattage)
   let estimatedWattage = 150; // Mainboard, fans, SSD base
   if (selectedItems['CAT-CPU']) {
@@ -210,6 +216,24 @@ export const PcBuilderView: React.FC = () => {
   };
 
   const handleConvertToInvoice = async (buildId: string) => {
+    const targetBuild = savedBuilds.find((b) => b.id === buildId);
+    if (targetBuild) {
+      const hasCpuInBuild = targetBuild.items.some(
+        (i) => i.categoryId === 'CAT-CPU' || i.productName.toUpperCase().includes('CPU')
+      );
+      const hasMainInBuild = targetBuild.items.some(
+        (i) =>
+          i.categoryId === 'CAT-MAIN' ||
+          i.productName.toUpperCase().includes('MAIN') ||
+          i.productName.toUpperCase().includes('BO MẠCH')
+      );
+
+      if (!hasCpuInBuild || !hasMainInBuild) {
+        alert('Cấu hình này chưa có đủ CPU hoặc Bo Mạch Chủ (Mainboard), không đủ điều kiện xuất hóa đơn bán lẻ!');
+        return;
+      }
+    }
+
     if (!confirm('Bạn có chắc chắn muốn chuyển cấu hình này sang Hóa đơn bán lẻ và tự động trừ kho?')) {
       return;
     }
@@ -520,6 +544,10 @@ export const PcBuilderView: React.FC = () => {
               <button
                 type="button"
                 onClick={async () => {
+                  if (!hasRequiredCoreParts) {
+                    alert('Chưa thể chốt hóa đơn: Vui lòng chọn cả CPU và Bo Mạch Chủ (Mainboard) cho cấu hình máy!');
+                    return;
+                  }
                   if (currentItems.length === 0) {
                     alert('Vui lòng chọn linh kiện trước khi xuất hóa đơn!');
                     return;
@@ -541,12 +569,24 @@ export const PcBuilderView: React.FC = () => {
                     alert(err.message || 'Lỗi xuất hóa đơn');
                   }
                 }}
-                disabled={currentItems.length === 0}
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white rounded-xl font-bold text-xs shadow-sm shadow-emerald-600/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                disabled={!hasRequiredCoreParts || currentItems.length === 0}
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white rounded-xl font-bold text-xs shadow-sm shadow-emerald-600/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none"
               >
                 <Receipt className="w-4 h-4" />
-                CHUYỂN THÀNH HÓA ĐƠN BÁN LẺ
+                CHỐT CẤU HÌNH & LƯU HOÁ ĐƠN
               </button>
+
+              {/* Cảnh báo thiếu linh kiện cốt lõi (CPU/Mainboard) */}
+              {!hasRequiredCoreParts && currentItems.length > 0 && (
+                <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] flex items-start gap-2 animate-in fade-in">
+                  <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold">Chưa thể chốt hóa đơn:</span> Bắt buộc phải có{' '}
+                    <strong>{[!hasCpu && 'CPU', !hasMainboard && 'Mainboard'].filter(Boolean).join(' và ')}</strong>{' '}
+                    để đảm bảo cấu hình máy hoàn chỉnh.
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

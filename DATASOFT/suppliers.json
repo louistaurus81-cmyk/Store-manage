@@ -1,0 +1,22 @@
+[
+  {
+    "id": "SUPP-001",
+    "code": "NCC-01",
+    "name": "Công ty Cổ phần Máy tính Vĩnh Xuân (SPC Distribution)",
+    "contactPerson": "Anh Trần Hùng",
+    "phone": "02439765415",
+    "email": "sales@spc.com.vn",
+    "address": "Số 9 ngõ 117 Thái Hà, Đống Đa, Hà Nội",
+    "currentDebt": 13500000
+  },
+  {
+    "id": "SUPP-002",
+    "code": "NCC-02",
+    "name": "Công ty TNHH Tin học Viết Sơn",
+    "contactPerson": "Chị Bích Ngọc",
+    "phone": "02838444378",
+    "email": "order@vietson.com",
+    "address": "150 Trần Quang Khải, P. Tân Định, Quận 1, TP.HCM",
+    "currentDebt": 0
+  }
+]

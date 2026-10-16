@@ -1,0 +1,116 @@
+[
+  {
+    "id": "BUILD-001",
+    "buildCode": "PC-202610-001",
+    "buildName": "Cấu hình Gaming Esports Core i5 13400F / RTX 4060 8GB OC",
+    "customerId": "CUST-001",
+    "customerName": "Nguyễn Hoàng Long",
+    "customerPhone": "0915234888",
+    "creatorId": "USR-003",
+    "creatorName": "Lê Thị Thu Thảo (Kinh doanh)",
+    "items": [
+      {
+        "categoryId": "CAT-CPU",
+        "categoryName": "CPU - Bộ Vi Xử Lý",
+        "productId": "PRD-009",
+        "productName": "CPU Intel Core i5-13400F (Up to 4.6GHz, 10 Cores 16 Threads)",
+        "sku": "CPU-INTEL-I5-13400F",
+        "quantity": 1,
+        "unitPrice": 4950000,
+        "discount": 0,
+        "total": 4950000,
+        "warrantyMonths": 36
+      },
+      {
+        "categoryId": "CAT-MAIN",
+        "categoryName": "Mainboard - Bo Mạch Chủ",
+        "productId": "PRD-011",
+        "productName": "Bo Mạch Chủ Asus PRIME B760M-K D4",
+        "sku": "MB-ASUS-B760M-K",
+        "quantity": 1,
+        "unitPrice": 2650000,
+        "discount": 0,
+        "total": 2650000,
+        "warrantyMonths": 36
+      },
+      {
+        "categoryId": "CAT-RAM",
+        "categoryName": "RAM - Bộ Nhớ Trong",
+        "productId": "PRD-004",
+        "productName": "RAM Kingston Fury Beast 16GB DDR4 Bus 3200MHz",
+        "sku": "RAM-FURY-16G-3200",
+        "quantity": 2,
+        "unitPrice": 950000,
+        "discount": 0,
+        "total": 1900000,
+        "warrantyMonths": 36
+      },
+      {
+        "categoryId": "CAT-SSD",
+        "categoryName": "SSD & Ổ Cứng Lưu Trữ",
+        "productId": "PRD-003",
+        "productName": "Ổ cứng SSD Kingston NV2 500GB PCIe 4.0 x4 M.2 NVMe",
+        "sku": "SSD-KS-NV2-500G",
+        "quantity": 1,
+        "unitPrice": 1150000,
+        "discount": 0,
+        "total": 1150000,
+        "warrantyMonths": 36
+      },
+      {
+        "categoryId": "CAT-VGA",
+        "categoryName": "VGA - Card Màn Hình",
+        "productId": "PRD-005",
+        "productName": "Card màn hình Asus Dual GeForce RTX 4060 OC Edition 8GB GDDR6",
+        "sku": "VGA-ASUS-4060",
+        "quantity": 1,
+        "unitPrice": 8900000,
+        "discount": 0,
+        "total": 8900000,
+        "warrantyMonths": 36
+      },
+      {
+        "categoryId": "CAT-PSU",
+        "categoryName": "Nguồn Máy Tính (PSU)",
+        "productId": "PRD-006",
+        "productName": "Nguồn máy tính Corsair CV650 650W 80 Plus Bronze",
+        "sku": "PSU-CORSAIR-650",
+        "quantity": 1,
+        "unitPrice": 1390000,
+        "discount": 0,
+        "total": 1390000,
+        "warrantyMonths": 36
+      },
+      {
+        "categoryId": "CAT-CASE",
+        "categoryName": "Vỏ Case Máy Tính",
+        "productId": "PRD-013",
+        "productName": "Vỏ Case Xigmatek NYX 3F (Kèm sẵn 3 Fan RGB, Kính cường lực)",
+        "sku": "CASE-XIGMATEK-NYX",
+        "quantity": 1,
+        "unitPrice": 650000,
+        "discount": 0,
+        "total": 650000,
+        "warrantyMonths": 12
+      },
+      {
+        "categoryId": "CAT-COOL",
+        "categoryName": "Tản Nhiệt Khí & Nước",
+        "productId": "PRD-014",
+        "productName": "Tản nhiệt khí Thermalright Assassin X 120 Refined SE ARGB",
+        "sku": "COOL-TR-AX120-ARGB",
+        "quantity": 1,
+        "unitPrice": 390000,
+        "discount": 0,
+        "total": 390000,
+        "warrantyMonths": 12
+      }
+    ],
+    "totalPrice": 22980000,
+    "discount": 480000,
+    "finalPrice": 22500000,
+    "note": "Khách yêu cầu lắp đặt tản khí ARGB và cài sẵn Windows 11 bản quyền.",
+    "createdAt": "2026-10-14T11:00:00.000Z",
+    "status": "draft"
+  }
+]

@@ -126,12 +126,28 @@ export const InvoicePrintModal: React.FC<InvoicePrintModalProps> = ({
 
           {/* Total & Payment details */}
           <div className="flex justify-between items-start my-4">
-            <div className="text-[11px] max-w-xs space-y-1">
-              <div className="font-bold text-slate-800">Thông tin chuyển khoản:</div>
-              <div>Ngân hàng: <strong>{store.bankName}</strong></div>
-              <div>Số TK: <strong className="font-mono text-slate-900">{store.bankAccount}</strong></div>
-              <div>Chủ TK: <strong>{store.bankOwner}</strong></div>
-              <div className="text-slate-500 mt-1">Nội dung CK: <span className="font-mono">{invoice.invoiceCode}</span></div>
+            <div className="flex items-start gap-3">
+              <div className="text-[11px] max-w-xs space-y-1">
+                <div className="font-bold text-slate-800">Thông tin chuyển khoản (VietQR):</div>
+                <div>Ngân hàng: <strong>{store.bankName}</strong></div>
+                <div>Số TK: <strong className="font-mono text-slate-900">{store.bankAccount}</strong></div>
+                <div>Chủ TK: <strong>{store.bankOwner}</strong></div>
+                <div className="text-slate-500 mt-1">Nội dung CK: <span className="font-mono">{invoice.invoiceCode}</span></div>
+              </div>
+              <div className="flex flex-col items-center border border-slate-200 rounded-lg p-1.5 bg-white text-center shadow-2xs">
+                <img
+                  src={`https://img.vietqr.io/image/970436-${store.bankAccount || '998812345678'}-compact2.png?amount=${
+                    invoice.debtAmount > 0 ? invoice.debtAmount : invoice.finalAmount
+                  }&addInfo=${encodeURIComponent(invoice.invoiceCode)}&accountName=${encodeURIComponent(store.bankOwner || 'NGUYEN THANH NAM')}`}
+                  alt="VietQR"
+                  className="w-22 h-22 object-contain"
+                />
+                <span className="text-[9px] font-mono font-semibold text-slate-700 mt-1">
+                  {invoice.debtAmount > 0
+                    ? `QR Tiền nợ: ${formatVND(invoice.debtAmount)}`
+                    : `QR Thanh toán: ${formatVND(invoice.finalAmount)}`}
+                </span>
+              </div>
             </div>
 
             <div className="w-64 space-y-1 text-right text-xs">

@@ -48,13 +48,12 @@ export class InventoryService {
     const hideImportPrice = role === 'sales' || role === 'technician';
 
     return products.map((p) => {
-      if (hideImportPrice) {
-        return {
-          ...p,
-          importPrice: 0,
-        };
-      }
-      return p;
+      const price = hideImportPrice ? 0 : p.importPrice;
+      return {
+        ...p,
+        importPrice: price,
+        costPrice: price,
+      };
     });
   }
 
@@ -62,10 +61,13 @@ export class InventoryService {
     const product = await this.db.findById<Product>('products.json', id);
     if (!product) return null;
 
-    if (role === 'sales' || role === 'technician') {
-      return { ...product, importPrice: 0 };
-    }
-    return product;
+    const hideImportPrice = role === 'sales' || role === 'technician';
+    const price = hideImportPrice ? 0 : product.importPrice;
+    return {
+      ...product,
+      importPrice: price,
+      costPrice: price,
+    };
   }
 
   /**

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "PRN-HIST-001",
+    "documentId": "INV-001",
+    "documentCode": "HD-202610-001",
+    "documentType": "invoice",
+    "templateId": "TMPL-INV-01",
+    "printedBy": "USR-003",
+    "printedByName": "Lê Thị Thu Thảo",
+    "printedAt": "2026-10-10T14:35:00.000Z"
+  }
+]

@@ -75,6 +75,7 @@ export interface Product {
   categoryId: string;
   categoryName?: string;
   importPrice: number;         // Giá vốn nhập kho (ẩn với Sales)
+  costPrice?: number;          // Giá vốn (alias phục vụ kiểm thử và tương thích)
   retailPrice: number;         // Giá bán lẻ
   wholesalePrice: number;      // Giá bán buôn/kỹ thuật
   stockQuantity: number;

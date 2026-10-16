@@ -1,0 +1,46 @@
+[
+  {
+    "id": "CUST-UAT-001",
+    "code": "KH-UAT-001",
+    "name": "Trần Văn Khang",
+    "phone": "0988.555.777",
+    "email": "khang.tran@gmail.com",
+    "address": "Số 168 Cầu Giấy, Quan Hoa, Cầu Giấy, Hà Nội",
+    "totalSpent": 0,
+    "currentDebt": 0,
+    "createdAt": "2026-10-16T09:54:00.394Z"
+  },
+  {
+    "id": "CUST-001",
+    "code": "KH-0001",
+    "name": "Nguyễn Hoàng Long",
+    "phone": "0915234888",
+    "email": "hoanglong.tech@gmail.com",
+    "address": "Số 45 Ngõ 102 Khuất Duy Tiến, Thanh Xuân, Hà Nội",
+    "totalSpent": 12500000,
+    "currentDebt": 0,
+    "createdAt": "2026-01-20T10:00:00.000Z"
+  },
+  {
+    "id": "CUST-002",
+    "code": "KH-0002",
+    "name": "Chị Mai Lan Anh",
+    "phone": "0983567112",
+    "email": "lananh.design@yahoo.com",
+    "address": "Tòa Landmark 72, Keangnam, Cầu Giấy, Hà Nội",
+    "totalSpent": 4800000,
+    "currentDebt": 1200000,
+    "createdAt": "2026-02-05T14:30:00.000Z"
+  },
+  {
+    "id": "CUST-003",
+    "code": "KH-0003",
+    "name": "Công ty TNHH Phần Mềm AlphaSoft",
+    "phone": "02438889999",
+    "email": "contact@alphasoft.vn",
+    "address": "Tầng 5, Tòa nhà Detech, Số 8 Tôn Thất Thuyết, Cầu Giấy",
+    "totalSpent": 35600000,
+    "currentDebt": 5000000,
+    "createdAt": "2026-01-12T08:15:00.000Z"
+  }
+]

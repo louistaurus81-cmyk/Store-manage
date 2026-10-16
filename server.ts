@@ -12,14 +12,10 @@ import { DashboardController } from './server/controllers/dashboard.controller';
 import { PurchaseService } from './server/services/purchaseService';
 import type { StoreSettings } from './src/types/datasoft';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const appDir = typeof __dirname !== 'undefined' ? __dirname : process.cwd();
 
-async function startServer() {
+export async function createApp() {
   const app = express();
-  const PORT = process.env.PORT || 3000;
-  const isProd = process.env.NODE_ENV === 'production';
-
   app.use(express.json());
 
   // Khởi tạo JSON Database Engine
@@ -655,6 +651,14 @@ async function startServer() {
     }
   });
 
+  return app;
+}
+
+export async function startServer() {
+  const app = await createApp();
+  const PORT = process.env.PORT || 3000;
+  const isProd = process.env.NODE_ENV === 'production';
+
   // ==========================================
   // 8. VITE MIDDLEWARE (DEV) & STATIC FILES (PROD)
   // ==========================================
@@ -669,7 +673,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.resolve(__dirname, 'dist');
+    const distPath = path.resolve(appDir, 'dist');
     app.use(express.static(distPath));
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
@@ -677,13 +681,15 @@ async function startServer() {
   }
 
   // Khởi động server lắng nghe trên 0.0.0.0 để máy trong mạng LAN có thể truy cập
-  app.listen(Number(PORT), '0.0.0.0', () => {
+  return app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`[DATASOFT LAN SERVER] Đang chạy tại http://0.0.0.0:${PORT}`);
     console.log(`[LAN ACCESS] Các máy trong mạng nội bộ truy cập: http://<IP_UBUNTU_SERVER>:${PORT}`);
   });
 }
 
-startServer().catch((err) => {
-  console.error('[DATASOFT] Lỗi khởi động máy chủ:', err);
-  process.exit(1);
-});
+if (process.env.NODE_ENV !== 'test') {
+  startServer().catch((err) => {
+    console.error('[DATASOFT] Lỗi khởi động máy chủ:', err);
+    process.exit(1);
+  });
+}

@@ -31,6 +31,8 @@ import {
   sanitizeVietnameseBarcode,
 } from '../hooks/useBarcodeScanner';
 import { MacToastContainer, ToastMessage } from '../components/MacToast';
+import { SkeletonCard } from '../components/common/SkeletonCard';
+import { EmptyState } from '../components/common/EmptyState';
 
 interface PosViewProps {
   onNavigateToTab?: (tab: string) => void;
@@ -76,8 +78,8 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
   const [customerName, setCustomerName] = useState('');
   const [customerSearchText, setCustomerSearchText] = useState('');
   const [isCustomerDropdownOpen, setIsCustomerDropdownOpen] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [discount, setDiscount] = useState<number>(0);
+  const [discountPercent, setDiscountPercent] = useState<number>(0);
   const [paymentMethod, setPaymentMethod] = useState<'transfer' | 'cash' | 'debt'>('transfer');
   const [paidAmount, setPaidAmount] = useState<number>(0);
 
@@ -305,6 +307,37 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
     }
   };
 
+  const handleDiscountPercentChange = (valStr: string) => {
+    // Chặn tuyệt đối ký tự chữ cái, dấu âm, ký tự đặc biệt
+    const cleanStr = valStr.replace(/[^\d]/g, '');
+    let pct = cleanStr === '' ? 0 : parseInt(cleanStr, 10);
+    if (isNaN(pct) || pct < 0) pct = 0;
+    if (pct > 100) pct = 100;
+
+    setDiscountPercent(pct);
+    const calculatedDiscount = Math.round((cartSubTotal * pct) / 100);
+    setDiscount(calculatedDiscount);
+    const newFinal = Math.max(0, cartSubTotal - calculatedDiscount);
+    if (paymentMethod !== 'debt') {
+      setPaidAmount(newFinal);
+    }
+  };
+
+  const handlePaidAmountChange = (valStr: string) => {
+    // Chặn tuyệt đối ký tự chữ cái, dấu âm, ký tự đặc biệt
+    const cleanStr = valStr.replace(/[^\d]/g, '');
+    let amount = cleanStr === '' ? 0 : parseInt(cleanStr, 10);
+    if (isNaN(amount) || amount < 0) amount = 0;
+    setPaidAmount(amount);
+  };
+
+  const preventNegativeAndCharKeys = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Chặn phím âm (-), phím cộng (+), số mũ (e, E), dấu chấm (.), phẩy (,)
+    if (['-', '+', 'e', 'E', '.', ','].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const handleCustomerPhoneChange = (phone: string) => {
     setCustomerPhone(phone);
     const found = customers.find((c) => c.phone.trim() === phone.trim());
@@ -323,6 +356,9 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
       return;
     }
 
+    const validatedDiscount = Math.max(0, Number(discount) || 0);
+    const validatedPaidAmount = Math.max(0, Number(paidAmount) || 0);
+
     try {
       const newInvoice = await apiFetch<Invoice>('/api/invoices', {
         method: 'POST',
@@ -331,8 +367,8 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
           customerName: customerName.trim(),
           customerPhone: customerPhone.trim(),
           items: cartItems,
-          discount,
-          paidAmount: paymentMethod === 'debt' ? 0 : paidAmount,
+          discount: validatedDiscount,
+          paidAmount: validatedPaidAmount,
           paymentMethod,
           salesId: user?.id || 'USR-003',
           salesName: user?.fullName || 'Nhân viên bán hàng',
@@ -346,6 +382,7 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
       setCustomerSearchText('');
       setSelectedCustomer(null);
       setDiscount(0);
+      setDiscountPercent(0);
       setPaidAmount(0);
 
       // Open print preview
@@ -514,14 +551,13 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
             {/* Product Card Grid (Cuộn danh sách) */}
             <div className="flex-1 overflow-y-auto pr-1">
               {loading ? (
-                <div className="h-64 flex items-center justify-center text-xs text-slate-400">
-                  Đang đồng bộ dữ liệu kho hàng...
-                </div>
+                <SkeletonCard count={6} type="pos-grid" />
               ) : filteredProducts.length === 0 ? (
-                <div className="h-64 flex flex-col items-center justify-center text-xs text-slate-400 bg-white rounded-2xl border border-slate-200/60 p-6 text-center">
-                  <AlertCircle className="w-8 h-8 text-slate-300 mb-2 stroke-[1.5]" />
-                  <span>Không tìm thấy linh kiện hoặc sản phẩm nào phù hợp.</span>
-                </div>
+                <EmptyState
+                  title="Không tìm thấy linh kiện"
+                  description="Không có sản phẩm nào khớp với từ khóa tìm kiếm hoặc bộ lọc danh mục hiện tại."
+                  className="py-12"
+                />
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3.5">
                   {filteredProducts.map((p) => {
@@ -791,11 +827,12 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
             {/* Danh sách Sản phẩm trong Giỏ (Cuộn) */}
             <div className="flex-1 overflow-y-auto py-3 space-y-2.5 pr-1">
               {cartItems.length === 0 ? (
-                <div className="h-44 flex flex-col items-center justify-center text-center text-xs text-slate-400 space-y-1">
-                  <ShoppingCart className="w-6 h-6 text-slate-300 stroke-[1.5]" />
-                  <span>Chưa có sản phẩm trong giỏ</span>
-                  <span className="text-[11px] text-slate-400">Nhấn vào thẻ sản phẩm bên trái để thêm</span>
-                </div>
+                <EmptyState
+                  icon={ShoppingCart}
+                  title="Giỏ hàng đang trống"
+                  description="Chưa có sản phẩm nào trong giỏ. Quét mã IMEI hoặc tìm kiếm linh kiện để bắt đầu đơn hàng mới tại Thịnh Phát Technology."
+                  className="py-10"
+                />
               ) : (
                 cartItems.map((item, idx) => (
                   <div
@@ -867,24 +904,95 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
                 </div>
 
                 <div className="flex justify-between items-center text-slate-600">
-                  <span>Giảm giá (VNĐ):</span>
-                  <input
-                    type="number"
-                    step={10000}
-                    value={discount}
-                    onChange={(e) => {
-                      const d = Number(e.target.value) || 0;
-                      setDiscount(d);
-                      updatePaidAmount(cartItems, d, paymentMethod);
-                    }}
-                    className="w-24 px-2 py-0.5 text-right border border-slate-200 rounded-lg font-mono text-xs"
-                  />
+                  <div className="flex items-center gap-1">
+                    <span>Chiết khấu (%):</span>
+                    {discount > 0 && (
+                      <span className="text-[10px] text-rose-600 font-mono">
+                        (-{formatVND(discount)})
+                      </span>
+                    )}
+                  </div>
+                  <div className="relative flex items-center">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={discountPercent}
+                      onKeyDown={preventNegativeAndCharKeys}
+                      onChange={(e) => handleDiscountPercentChange(e.target.value)}
+                      placeholder="0"
+                      className="w-20 px-2 py-0.5 pr-5 text-right border border-slate-200 rounded-lg font-mono text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-hidden"
+                    />
+                    <span className="absolute right-2 text-slate-400 pointer-events-none text-[10px]">%</span>
+                  </div>
                 </div>
 
                 <div className="flex justify-between font-bold text-sm text-slate-900 pt-1.5 border-t border-slate-100">
                   <span>TỔNG THANH TOÁN:</span>
                   <span className="font-mono text-emerald-700 text-base">{formatVND(cartFinalTotal)}</span>
                 </div>
+
+                <div className="flex justify-between items-center text-slate-600 pt-1">
+                  <span>Khách thanh toán:</span>
+                  <div className="relative flex items-center">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={paidAmount}
+                      onKeyDown={preventNegativeAndCharKeys}
+                      onChange={(e) => handlePaidAmountChange(e.target.value)}
+                      className="w-28 px-2 py-0.5 pr-5 text-right border border-slate-200 rounded-lg font-mono text-xs font-semibold focus:ring-1 focus:ring-emerald-500 focus:outline-hidden"
+                    />
+                    <span className="absolute right-2 text-slate-400 pointer-events-none text-[10px]">đ</span>
+                  </div>
+                </div>
+
+                {/* Tình trạng thanh toán: Trả đủ / Còn nợ / Thối lại */}
+                {cartFinalTotal > 0 && (
+                  <div className="flex justify-between items-center text-[11px] px-2 py-1 rounded-lg bg-slate-50 border border-slate-100">
+                    <span className="text-slate-500">Tình trạng thu:</span>
+                    {paidAmount < cartFinalTotal ? (
+                      <span className="font-semibold text-rose-600 font-mono">
+                        Ghi nợ: {formatVND(cartFinalTotal - paidAmount)}
+                      </span>
+                    ) : paidAmount > cartFinalTotal ? (
+                      <span className="font-semibold text-emerald-600 font-mono">
+                        Tiền thừa: {formatVND(paidAmount - cartFinalTotal)}
+                      </span>
+                    ) : (
+                      <span className="font-semibold text-emerald-700">Đã thanh toán đủ</span>
+                    )}
+                  </div>
+                )}
+
+                {/* Phím chọn nhanh tỷ lệ trả */}
+                {cartFinalTotal > 0 && (
+                  <div className="flex gap-1.5 pt-0.5">
+                    <button
+                      type="button"
+                      onClick={() => setPaidAmount(cartFinalTotal)}
+                      className="flex-1 py-1 px-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[10px] font-semibold text-slate-700 cursor-pointer text-center transition-colors"
+                    >
+                      Trả đủ 100%
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaidAmount(Math.round(cartFinalTotal / 2))}
+                      className="flex-1 py-1 px-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[10px] font-semibold text-amber-700 cursor-pointer text-center transition-colors"
+                    >
+                      Trả 50% (Nợ 50%)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPaymentMethod('debt');
+                        setPaidAmount(0);
+                      }}
+                      className="flex-1 py-1 px-1 rounded-lg border border-rose-200 bg-rose-50/50 hover:bg-rose-100/50 text-[10px] font-semibold text-rose-700 cursor-pointer text-center transition-colors"
+                    >
+                      Ghi nợ toàn bộ
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Payment Methods */}
@@ -945,7 +1053,7 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
                 type="button"
                 onClick={handleCheckout}
                 disabled={cartItems.length === 0}
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] disabled:opacity-50 text-white rounded-xl font-bold text-xs shadow-sm shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-95 disabled:opacity-50 text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/20 transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
                 THANH TOÁN & IN HÓA ĐƠN
@@ -1035,9 +1143,9 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
 
       {/* MODAL CHỌN SỐ SERIAL / IMEI CHO SẢN PHẨM */}
       {selectedProductForImei && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
-            <div className="flex items-center justify-between border-b pb-3">
+        <div className="fixed inset-0 z-50 bg-zinc-900/20 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-200/60 max-w-md w-full p-6 space-y-4 animate-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-zinc-200/60 pb-3">
               <div>
                 <h4 className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
                   <Barcode className="w-4 h-4 text-emerald-600" />
@@ -1049,7 +1157,7 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
               </div>
               <button
                 onClick={() => setSelectedProductForImei(null)}
-                className="text-slate-400 hover:text-slate-600 p-1"
+                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors active:scale-95"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1067,13 +1175,13 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
                 <label className="block text-slate-700 font-medium">
                   Chọn số Serial/IMEI gắn cho sản phẩm này:
                 </label>
-                <div className="max-h-48 overflow-y-auto space-y-1.5 border border-slate-200 rounded-xl p-2">
+                <div className="max-h-48 overflow-y-auto space-y-1.5 border border-zinc-200/60 rounded-xl p-2 bg-slate-50/50">
                   {availableImeis.map((imei) => (
                     <button
                       key={imei}
                       type="button"
                       onClick={() => setChosenImei(imei)}
-                      className={`w-full p-2.5 rounded-lg text-left font-mono font-semibold text-xs flex items-center justify-between transition-colors ${
+                      className={`w-full p-2.5 rounded-lg text-left font-mono font-semibold text-xs flex items-center justify-between transition-colors cursor-pointer ${
                         chosenImei === imei
                           ? 'bg-emerald-50 text-emerald-800 border border-emerald-300'
                           : 'bg-white hover:bg-slate-50 border border-transparent'
@@ -1085,11 +1193,11 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
                   ))}
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t">
+                <div className="flex justify-end gap-2 pt-3 border-t border-zinc-200/60">
                   <button
                     type="button"
                     onClick={() => setSelectedProductForImei(null)}
-                    className="px-4 py-2 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-50 text-xs"
+                    className="px-4 py-2 border border-zinc-200 rounded-xl text-slate-600 hover:bg-slate-50 text-xs font-semibold active:scale-95 transition-transform duration-150 cursor-pointer"
                   >
                     Hủy
                   </button>
@@ -1097,7 +1205,7 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
                     type="button"
                     disabled={!chosenImei}
                     onClick={() => addItemToCart(selectedProductForImei, chosenImei)}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs disabled:opacity-50"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs disabled:opacity-50 active:scale-95 transition-transform duration-150 cursor-pointer shadow-xs"
                   >
                     Xác nhận thêm vào giỏ
                   </button>
@@ -1110,8 +1218,8 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
 
       {/* SLIDE-OVER PANEL XEM CHI TIẾT HÓA ĐƠN ĐÃ BÁN (YÊU CẦU 4) */}
       {selectedInvoiceDetail && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex justify-end">
-          <div className="bg-white w-full max-w-xl h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-200">
+        <div className="fixed inset-0 z-50 bg-zinc-900/20 backdrop-blur-sm flex justify-end animate-in fade-in duration-150">
+          <div className="bg-white/95 backdrop-blur-md w-full max-w-xl h-full shadow-2xl border-l border-zinc-200/60 flex flex-col animate-in slide-in-from-right duration-200">
             {/* Header */}
             <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
               <div className="space-y-0.5">
@@ -1273,8 +1381,8 @@ export const PosView: React.FC<PosViewProps> = ({ onNavigateToTab }) => {
 
       {/* Barcode Scanner Modal (Quét & Giả lập quét phần cứng) */}
       {showBarcodeModal && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200/80 w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 bg-zinc-900/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-200/60 w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-150">
             {/* Modal Header */}
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-2.5">

@@ -1,5 +1,22 @@
 [
   {
+    "id": "PRD-MAIN-B760-UAT",
+    "sku": "MB-ASUS-B760-A",
+    "name": "Mainboard ASUS ROG Strix B760-A Gaming WiFi D4",
+    "categoryId": "CAT-MAIN",
+    "categoryName": "Bo Mạch Chủ",
+    "importPrice": 6200000,
+    "costPrice": 6200000,
+    "retailPrice": 7500000,
+    "wholesalePrice": 7000000,
+    "stockQuantity": 5,
+    "minStockAlert": 2,
+    "unit": "Chiếc",
+    "hasSerialImei": true,
+    "warrantyMonths": 36,
+    "description": "Mainboard Intel LGA 1700 chuẩn DDR4, WiFi 6E, phục vụ test UAT bán hàng & bảo hành"
+  },
+  {
     "name": "Keo tản nhiệt MX-4 4g",
     "categoryId": "CAT-02",
     "hasSerialImei": false,

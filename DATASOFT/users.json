@@ -1,0 +1,102 @@
+[
+  {
+    "id": "USR-001",
+    "username": "admin",
+    "passwordHash": "359ac62bece35aac6c78abd4d16cc025cab510bdf02fdd93d6702fcb090339096ed3d3c6ed5c7af7d54fdac8d3e4bfcf78c086f39dff58ff19bef43ea800ee9b",
+    "salt": "salt_admin_datasoft_2026",
+    "fullName": "Nguyễn Thành Nam (Quản trị viên)",
+    "role": "admin",
+    "phone": "0988123456",
+    "active": true,
+    "createdAt": "2026-01-10T08:00:00.000Z",
+    "permissions": [
+      "all"
+    ]
+  },
+  {
+    "id": "USR-002",
+    "username": "chu_shop",
+    "passwordHash": "0140adf0eb63f806f8cec58bd24c7cc4e2f7a9d7bb2f9ee8b2c984e206cd754940aba688793e06f77c0054a5b884388e3e2c7a757a9b1b1b51afdbd648c1e9cd",
+    "salt": "salt_manager_datasoft_2026",
+    "fullName": "Trần Văn Mạnh (Chủ cửa hàng)",
+    "role": "manager",
+    "phone": "0912345678",
+    "active": true,
+    "createdAt": "2026-01-10T08:30:00.000Z",
+    "permissions": [
+      "reports",
+      "inventory_manage",
+      "debts_manage",
+      "orders_manage"
+    ]
+  },
+  {
+    "id": "USR-003",
+    "username": "ban_hang",
+    "passwordHash": "8bb294a743b7878cd3393e122b1ad21f4c7e66942b4dbd95a89d3402658ba56a153d21d4f906ffb5385eebeb0c7d235f394e6c5afc1e10ed83c14756bb248d93",
+    "salt": "salt_sales_datasoft_2026",
+    "fullName": "Lê Thị Thu Thảo (Kinh doanh)",
+    "role": "sales",
+    "phone": "0977889900",
+    "active": true,
+    "createdAt": "2026-01-15T09:00:00.000Z",
+    "permissions": [
+      "create_invoice",
+      "view_stock_public",
+      "manage_customers"
+    ]
+  },
+  {
+    "id": "USR-004",
+    "username": "ky_thuat",
+    "passwordHash": "43c7253fd83b8a74c5706d37c9dfbef6d39796cda7dd40bc0804b0df55f19b0de957dd80fec20d2c0ab309ea1daa7ca15b53a200e0c34719497eb565e40847f8",
+    "salt": "salt_tech_datasoft_2026",
+    "fullName": "Đặng Tuấn Anh (Trưởng nhóm Kỹ thuật)",
+    "role": "technician",
+    "phone": "0903112233",
+    "active": true,
+    "createdAt": "2026-01-15T09:15:00.000Z",
+    "permissions": [
+      "repair_intake",
+      "repair_update",
+      "warranty_check",
+      "request_parts"
+    ]
+  },
+  {
+    "id": "USR-UAT-SALES01",
+    "username": "sales01",
+    "passwordHash": "dcb416e3332aabf358192b4351dd0c2b7eafe1d2d8ea69105fc3ca52d4011bea31fbc867a5f5ceb88f9ad0d4bad22bcd237e7eeb0908ad047c30cc7a00011ef7",
+    "salt": "salt_sales01_uat_2026",
+    "fullName": "Nguyễn Thu Trang (Sales UAT)",
+    "role": "sales",
+    "phone": "0911555666",
+    "active": true,
+    "createdAt": "2026-10-16T09:54:00.389Z",
+    "permissions": [
+      "invoices.create",
+      "invoices.view_own",
+      "inventory.view_public",
+      "customers.manage",
+      "repairs.create_intake"
+    ]
+  },
+  {
+    "id": "USR-UAT-TECH01",
+    "username": "tech01",
+    "passwordHash": "f21caf7a78dcbb128907112a6c2871efefa22f6d944b60ed5d9b6424c30cb4f5ed7bf6850976c093935569fece8448f6a001fa377adef5235d3df6c48f179e59",
+    "salt": "salt_tech01_uat_2026",
+    "fullName": "Phạm Minh Đức (Kỹ Thuật UAT)",
+    "role": "technician",
+    "phone": "0933777888",
+    "active": true,
+    "createdAt": "2026-10-16T09:54:00.392Z",
+    "permissions": [
+      "repairs.view_assigned",
+      "repairs.update_status",
+      "repairs.propose_parts",
+      "warranty.lookup",
+      "inventory.view_public"
+    ]
+  }
+]

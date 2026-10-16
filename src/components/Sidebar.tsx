@@ -113,9 +113,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const visibleItems = menuItems.filter((item) => item.roles.includes(role));
 
   return (
-    <aside className="w-64 bg-white/80 backdrop-blur-xl border-r border-slate-200/80 flex flex-col shrink-0 select-none no-print font-sans">
+    <aside className="w-64 bg-white/70 backdrop-blur-md border-r border-zinc-200/50 flex flex-col shrink-0 select-none no-print font-sans">
       {/* macOS Window Controls (Traffic Lights) & Header */}
-      <div className="p-4 border-b border-slate-200/60">
+      <div className="p-4 border-b border-zinc-200/50">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 shadow-xs" />
@@ -147,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-150 active:scale-95 text-left cursor-pointer ${
                 isActive
                   ? 'bg-slate-900 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
@@ -161,9 +161,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       {/* User Session & Logout Footer */}
-      <div className="p-3 border-t border-slate-200/70 bg-slate-50/50 space-y-2">
+      <div className="p-3 border-t border-zinc-200/50 bg-white/40 space-y-2">
         {currentUser && (
-          <div className="p-2 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex items-center justify-between gap-2">
+          <div className="p-2 bg-white/80 backdrop-blur-sm rounded-xl border border-zinc-200/60 shadow-2xs flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
               <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">
                 {currentUser.fullName.charAt(0)}
@@ -180,7 +180,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             <button
               onClick={onLogout}
-              className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+              className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-all duration-150 active:scale-95 cursor-pointer"
               title="Đăng xuất"
             >
               <LogOut className="w-3.5 h-3.5" />

@@ -124,10 +124,26 @@ export class JsonDatabaseEngine {
    * Ghi dữ liệu Atomic + Mutex Queue
    * Ngăn chặn hoàn toàn hiện tượng race condition & hỏng file khi nhiều client LAN ghi đồng thời
    */
-  public async writeAtomic<T>(fileName: string, data: T): Promise<void> {
+  /**
+   * Điều phối hàng đợi Mutex bất đồng bộ cho từng file
+   */
+  public async enqueue<T>(fileName: string, taskFn: () => Promise<T>): Promise<T> {
     const queue = this.writeQueues.get(fileName) || Promise.resolve();
+    let result: T;
+    const queuedTask = queue.then(async () => {
+      result = await taskFn();
+      return result;
+    });
+    this.writeQueues.set(fileName, queuedTask.catch(() => {}));
+    return queuedTask;
+  }
 
-    const writeTask = queue.then(async () => {
+  /**
+   * Ghi dữ liệu Atomic + Mutex Queue
+   * Ngăn chặn hoàn toàn hiện tượng race condition & hỏng file khi nhiều client LAN ghi đồng thời
+   */
+  public async writeAtomic<T>(fileName: string, data: T): Promise<void> {
+    return this.enqueue(fileName, async () => {
       const targetPath = path.join(this.baseDir, fileName);
       const tempPath = path.join(
         this.baseDir,
@@ -140,7 +156,7 @@ export class JsonDatabaseEngine {
         // 1. Ghi dữ liệu hoàn chỉnh ra file tạm thời
         await fs.promises.writeFile(tempPath, jsonString, { encoding: 'utf-8', flag: 'w' });
 
-        // 2. Thực hiện rename nguyên tử (atomic rename của hệ thống file Linux POSIX)
+        // 2. Thực hiện rename nguyên tử (atomic rename của hệ thống file Linux POSIX / NTFS)
         await fs.promises.rename(tempPath, targetPath);
       } catch (err) {
         console.error(`[DATASOFT] Lỗi ghi atomic cho ${fileName}:`, err);
@@ -155,11 +171,6 @@ export class JsonDatabaseEngine {
         throw err;
       }
     });
-
-    // Cập nhật chuỗi Promise cho file này
-    this.writeQueues.set(fileName, writeTask.catch(() => {}));
-
-    return writeTask as Promise<void>;
   }
 
   /**
@@ -176,10 +187,28 @@ export class JsonDatabaseEngine {
   }
 
   public async insert<T extends { id: string }>(fileName: string, item: T): Promise<T> {
-    const list = await this.getList<T>(fileName);
-    list.unshift(item);
-    await this.writeAtomic(fileName, list);
-    return item;
+    return this.enqueue(fileName, async () => {
+      const list = await this.getList<T>(fileName);
+      list.unshift(item);
+      const targetPath = path.join(this.baseDir, fileName);
+      const tempPath = path.join(
+        this.baseDir,
+        `${fileName}.tmp.${Date.now()}_${process.pid}_${Math.random().toString(36).substring(2, 8)}`
+      );
+      const jsonString = JSON.stringify(list, null, 2);
+      try {
+        await fs.promises.writeFile(tempPath, jsonString, { encoding: 'utf-8', flag: 'w' });
+        await fs.promises.rename(tempPath, targetPath);
+      } catch (err) {
+        if (fs.existsSync(tempPath)) {
+          try {
+            await fs.promises.unlink(tempPath);
+          } catch {}
+        }
+        throw err;
+      }
+      return item;
+    });
   }
 
   public async update<T extends { id: string }>(
@@ -187,22 +216,58 @@ export class JsonDatabaseEngine {
     id: string,
     updates: Partial<T>
   ): Promise<T | null> {
-    const list = await this.getList<T>(fileName);
-    const index = list.findIndex((item) => item.id === id);
-    if (index === -1) return null;
+    return this.enqueue(fileName, async () => {
+      const list = await this.getList<T>(fileName);
+      const index = list.findIndex((item) => item.id === id);
+      if (index === -1) return null;
 
-    list[index] = { ...list[index], ...updates };
-    await this.writeAtomic(fileName, list);
-    return list[index];
+      list[index] = { ...list[index], ...updates };
+      const targetPath = path.join(this.baseDir, fileName);
+      const tempPath = path.join(
+        this.baseDir,
+        `${fileName}.tmp.${Date.now()}_${process.pid}_${Math.random().toString(36).substring(2, 8)}`
+      );
+      const jsonString = JSON.stringify(list, null, 2);
+      try {
+        await fs.promises.writeFile(tempPath, jsonString, { encoding: 'utf-8', flag: 'w' });
+        await fs.promises.rename(tempPath, targetPath);
+      } catch (err) {
+        if (fs.existsSync(tempPath)) {
+          try {
+            await fs.promises.unlink(tempPath);
+          } catch {}
+        }
+        throw err;
+      }
+      return list[index];
+    });
   }
 
   public async delete<T extends { id: string }>(fileName: string, id: string): Promise<boolean> {
-    const list = await this.getList<T>(fileName);
-    const filtered = list.filter((item) => item.id !== id);
-    if (filtered.length === list.length) return false;
+    return this.enqueue(fileName, async () => {
+      const list = await this.getList<T>(fileName);
+      const filtered = list.filter((item) => item.id !== id);
+      if (filtered.length === list.length) return false;
 
-    await this.writeAtomic(fileName, filtered);
-    return true;
+      const targetPath = path.join(this.baseDir, fileName);
+      const tempPath = path.join(
+        this.baseDir,
+        `${fileName}.tmp.${Date.now()}_${process.pid}_${Math.random().toString(36).substring(2, 8)}`
+      );
+      const jsonString = JSON.stringify(filtered, null, 2);
+      try {
+        await fs.promises.writeFile(tempPath, jsonString, { encoding: 'utf-8', flag: 'w' });
+        await fs.promises.rename(tempPath, targetPath);
+      } catch (err) {
+        if (fs.existsSync(tempPath)) {
+          try {
+            await fs.promises.unlink(tempPath);
+          } catch {}
+        }
+        throw err;
+      }
+      return true;
+    });
   }
 
   /**
